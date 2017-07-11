@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Content from './components/content';
 import contentList from './components/contentList';
 import { Howl } from 'howler';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import './App.css';
 
 class App extends Component {
@@ -46,12 +47,16 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
         </div>
-        <div style={{width: '200px'}}>
-          <Content src={this.state.content.image} />
-        </div>
-        <div style={{width: '200px'}}>
-          { this.listOfContents() }
-        </div>
+        <Grid fluid>
+          <Row>
+            <Col xs={12} sm={12} md={8}>
+              <Content src={this.state.content.image} />
+            </Col>
+            <Col xs={12} sm={12} md={4}>
+              { this.listOfContents() }
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
