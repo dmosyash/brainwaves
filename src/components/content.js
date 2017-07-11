@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Content extends Component {
     render() {
         return (
-            <img src={this.props.src} width="100%"/> 
+            <img alt="sdf" src={this.props.src} width="100%"/> 
         );
     }
 }
