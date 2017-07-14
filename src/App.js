@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Content from './components/content';
 import contentList from './components/contentList';
+import ControlBox from './components/controls/controlBox';
 import { Howl } from 'howler';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './App.css';
@@ -15,13 +16,12 @@ class App extends Component {
     this.audio = null;
   }
 
-  onAudioEnd() {
-    this.setState({controls: (
+  componentWillMount () {
+    this.state.controls = (
       <div className="controls">
-        <button className="next-button" onClick={() => this.selectedContent(contentList[this.state.content.order + 1])}>Next</button>
-        <button className="previous-button" onClick={() => this.selectedContent(contentList[this.state.content.order + 1])}>Previous</button>
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)}/>
       </div>
-    )});
+    );
   }
 
   componentDidMount() {
@@ -30,13 +30,43 @@ class App extends Component {
         onend: this.onAudioEnd.bind(this)
     });
     this.audio.play();
+    let that = this;
+    setTimeout(function () {
+      that.setState({controls: null})
+    }, 1000);
+  }
+
+  onAudioEnd() {
+    this.setState({controls: (
+      <div className="controls">
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)}/>
+      </div>
+    ),
+    suggestions: (
+      <div className="suggestions">
+        { this.listOfContents() }
+      </div>
+    )
+    });
+  }
+
+  gotoIndex(index) {
+    this.selectedContent(contentList[index]);
+  }
+
+  playPauseToggle(bool) {
+    if(!bool) {
+      this.audio.pause();
+    } else {
+      this.audio.play();
+    }
   }
 
   selectedContent(item) {
-    let that = this;
     this.setState({
       content: item,
-      controls: null
+      controls: null,
+      suggestions: null
     });
     this.audio.stop();
     this.audio = new Howl({
@@ -44,12 +74,13 @@ class App extends Component {
         onend: this.onAudioEnd.bind(this)
     });
     this.audio.play();
+    // this.audio.mute(true);
   }
 
   listOfContents() {
     return contentList.map((v) => {
       return (
-        <div key={v.id} width="100" height="50" style={{border: '1px solid'}} onClick={() => this.selectedContent(v)}>
+        <div key={v.id} className="list-contents" style={{border: '1px solid'}} onClick={() => this.selectedContent(v)}>
           <h5>{v.name}</h5>
         </div>
       )
@@ -63,13 +94,15 @@ class App extends Component {
         </div>
         <Grid fluid>
           <Row>
-            <Col xs={12} sm={12} md={8}>
+            <Col xs={12} sm={8} md={8}>
               <div className="content-holder">
-                <Content src={this.state.content.image}/>
-                {this.state.controls}
+                <Content src={ this.state.content.image }/>
+                { this.state.suggestions }
+                { this.state.controls }
               </div>
             </Col>
-            <Col xs={12} sm={12} md={4}>
+            <Col xs={12} sm={4} md={4}>
+              <h3>BRAINWAVES</h3>
               { this.listOfContents() }
             </Col>
           </Row>
