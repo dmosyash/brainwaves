@@ -14,12 +14,11 @@ class App extends Component {
       controls: null
     }
     this.audio = null;
-  }
-
-  componentWillMount () {
-    this.state.controls = (
+    this.hover = false;
+    this.slideEnd = false;
+    this.controlsDOM = (
       <div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)}/>
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd}/>
       </div>
     );
   }
@@ -37,17 +36,38 @@ class App extends Component {
   }
 
   onAudioEnd() {
-    this.setState({controls: (
-      <div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)}/>
-      </div>
-    ),
-    suggestions: (
-      <div className="suggestions">
-        { this.listOfContents() }
-      </div>
-    )
+    this.slideEnd = true;
+    this.setState({controls: (<div className="controls">
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} />
+    </div>),
+      suggestions: (
+        <div className="suggestions">
+          { this.listOfContents() }
+        </div>
+      )
     });
+  }
+
+  hoverStart(){
+    if(this.slideEnd) {
+      return;
+    }
+    this.hover = !this.hover;
+    if(this.hover) {
+      this.setState({controls: this.controlsDOM});
+    }
+  }
+
+  hoverEnd(){
+    if(this.slideEnd) {
+      return;
+    }
+    setTimeout(function () {
+      this.hover = !this.hover;
+      if(!this.hover) {
+        this.setState({controls: null});
+      }
+    }.bind(this), 1000);
   }
 
   gotoIndex(index) {
@@ -62,6 +82,16 @@ class App extends Component {
     }
   }
 
+  replay() {
+    this.slideEnd = false;
+    this.audio.play();
+    alert('replay');
+    this.setState({
+      controls: null,
+      suggestions: null
+    });
+  }
+
   selectedContent(item) {
     this.setState({
       content: item,
@@ -74,7 +104,8 @@ class App extends Component {
         onend: this.onAudioEnd.bind(this)
     });
     this.audio.play();
-    // this.audio.mute(true);
+    this.slideEnd = false;
+    this.audio.mute(true);
   }
 
   listOfContents() {
@@ -87,6 +118,23 @@ class App extends Component {
     })
   }
 
+  fullScreen() {
+    console.log(this.canvas);
+    if (this.canvas.requestFullscreen) {
+      this.canvas.requestFullscreen();
+    } else if (this.canvas.msRequestFullscreen) {
+      this.canvas.msRequestFullscreen();
+    } else if (this.canvas.mozRequestFullScreen) {
+      this.canvas.mozRequestFullScreen();
+    } else if (this.canvas.webkitRequestFullscreen) {
+      this.canvas.webkitRequestFullscreen();
+    }
+    window.screen.orientation.lock('landscape').then(null, function(error) {
+      alert(error);
+      // document.exitFullscreen()
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -94,16 +142,17 @@ class App extends Component {
         </div>
         <Grid fluid>
           <Row>
-            <Col xs={12} sm={8} md={8}>
-              <div className="content-holder">
-                <Content src={ this.state.content.image }/>
-                { this.state.suggestions }
+            <Col xs={12} sm={12} md={8}>
+              <div className="content-holder" onMouseEnter={() => this.hoverStart()} onMouseLeave={() => this.hoverEnd()} ref={(input) => {this.canvas = input}}>
+                <Content src={this.state.content.image} />
                 { this.state.controls }
+                { this.state.suggestions }
               </div>
             </Col>
-            <Col xs={12} sm={4} md={4}>
+            <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
               { this.listOfContents() }
+              <button type="button" onClick={() => this.fullScreen()}>Fullscreen</button>
             </Col>
           </Row>
         </Grid>

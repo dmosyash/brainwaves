@@ -19,7 +19,7 @@ class ControlBox extends Component {
         return (
             <div style={controlBoxStyle} >
                 <NextButton gotoIndex={this.props.gotoIndex} currentIndex={this.props.currentIndex}/>
-                <PlayPause playToggle={this.props.playToggle}/>
+                <PlayPause playToggle={this.props.playToggle} replay={this.props.replay} slideEnd={this.props.slideEnd} />
                 <PreviousButton gotoIndex={this.props.gotoIndex} currentIndex={this.props.currentIndex}/>
                 <VolumeSlider />
             </div>
