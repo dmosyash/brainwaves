@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PreviousButton from './previousButton.js';
 import NextButton from './nextButton.js';
 import PlayPause from './playPause.js';
+import Fullscreen from './fullscreen.js';
 import VolumeSlider from './volume.js';
 import './controls.css';
 
@@ -20,6 +21,7 @@ class ControlBox extends Component {
             <div style={controlBoxStyle} >
                 <NextButton gotoIndex={this.props.gotoIndex} currentIndex={this.props.currentIndex}/>
                 <PlayPause playToggle={this.props.playToggle} replay={this.props.replay} slideEnd={this.props.slideEnd} />
+                <Fullscreen canvas={this.props.canvas} />
                 <PreviousButton gotoIndex={this.props.gotoIndex} currentIndex={this.props.currentIndex}/>
                 <VolumeSlider />
             </div>

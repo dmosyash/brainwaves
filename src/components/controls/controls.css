@@ -63,3 +63,13 @@
     top: 8px;
     right: 8px;
 }
+
+#button svg {
+
+  width: 35px;
+
+  height: 35px;
+
+  display: inline-block;
+
+}

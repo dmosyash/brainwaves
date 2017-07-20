@@ -15,12 +15,7 @@ class App extends Component {
     }
     this.audio = null;
     this.hover = false;
-    this.slideEnd = false;
-    this.controlsDOM = (
-      <div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd}/>
-      </div>
-    );
+    this.slideEnd = false;    
   }
 
   componentDidMount() {
@@ -29,6 +24,11 @@ class App extends Component {
         onend: this.onAudioEnd.bind(this)
     });
     this.audio.play();
+    this.controlsDOM = (
+      <div className="controls">
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas}/>
+      </div>
+    );
     let that = this;
     setTimeout(function () {
       that.setState({controls: null})
@@ -38,7 +38,7 @@ class App extends Component {
   onAudioEnd() {
     this.slideEnd = true;
     this.setState({controls: (<div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} />
+        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas}/>
     </div>),
       suggestions: (
         <div className="suggestions">
@@ -62,6 +62,7 @@ class App extends Component {
     if(this.slideEnd) {
       return;
     }
+    alert('hoverEnd');
     setTimeout(function () {
       this.hover = !this.hover;
       if(!this.hover) {
@@ -85,7 +86,7 @@ class App extends Component {
   replay() {
     this.slideEnd = false;
     this.audio.play();
-    alert('replay');
+    // alert('replay');
     this.setState({
       controls: null,
       suggestions: null
@@ -152,7 +153,6 @@ class App extends Component {
             <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
               { this.listOfContents() }
-              <button type="button" onClick={() => this.fullScreen()}>Fullscreen</button>
             </Col>
           </Row>
         </Grid>
