@@ -48,26 +48,21 @@ class App extends Component {
     });
   }
 
-  hoverStart(){
+  hoverStart() {
     if(this.slideEnd) {
       return;
     }
-    this.hover = !this.hover;
-    if(this.hover) {
-      this.setState({controls: this.controlsDOM});
-    }
+    this.hover = true;
+    this.setState({controls: this.controlsDOM});
   }
 
   hoverEnd(){
     if(this.slideEnd) {
       return;
     }
-    alert('hoverEnd');
     setTimeout(function () {
-      this.hover = !this.hover;
-      if(!this.hover) {
-        this.setState({controls: null});
-      }
+      this.hover = false;
+      this.setState({controls: null});
     }.bind(this), 1000);
   }
 
@@ -86,7 +81,6 @@ class App extends Component {
   replay() {
     this.slideEnd = false;
     this.audio.play();
-    // alert('replay');
     this.setState({
       controls: null,
       suggestions: null
@@ -119,31 +113,14 @@ class App extends Component {
     })
   }
 
-  fullScreen() {
-    console.log(this.canvas);
-    if (this.canvas.requestFullscreen) {
-      this.canvas.requestFullscreen();
-    } else if (this.canvas.msRequestFullscreen) {
-      this.canvas.msRequestFullscreen();
-    } else if (this.canvas.mozRequestFullScreen) {
-      this.canvas.mozRequestFullScreen();
-    } else if (this.canvas.webkitRequestFullscreen) {
-      this.canvas.webkitRequestFullscreen();
-    }
-    window.screen.orientation.lock('landscape').then(null, function(error) {
-      alert(error);
-      // document.exitFullscreen()
-    });
-  }
-
   render() {
     return (
       <div className="App">
         <div className="App-header">
         </div>
-        <Grid fluid>
+        <Grid>
           <Row>
-            <Col xs={12} sm={12} md={8}>
+            <Col xs={12} sm={12} md={8} style={{ margin: '0px', padding: '0px' }}>
               <div className="content-holder" onMouseEnter={() => this.hoverStart()} onMouseLeave={() => this.hoverEnd()} ref={(input) => {this.canvas = input}}>
                 <Content src={this.state.content.image} />
                 { this.state.controls }
@@ -152,7 +129,7 @@ class App extends Component {
             </Col>
             <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
-              { this.listOfContents() }
+              <div style={{ margin: '20px' }}>{ this.listOfContents() }</div>
             </Col>
           </Row>
         </Grid>

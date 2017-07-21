@@ -64,7 +64,7 @@ class Fullscreen extends Component {
             padding: '8px 8px',
             position: 'absolute',
             bottom: '-10px',
-            left: '82.5%'
+            right: '0px'
         }
         return (   
             <div style={fullscreenStyle}>         
