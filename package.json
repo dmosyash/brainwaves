@@ -2,7 +2,7 @@
   "name": "brainwaves",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://dmosyash.github.io/brainwave",
+  "homepage": "http://dmosyash.github.io/brainwaves",
   "dependencies": {
     "howler": "^2.0.4",
     "react": "^15.6.1",
