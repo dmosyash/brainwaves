@@ -22,13 +22,13 @@ class PlayPause extends Component {
 
     render() {
         let slideEnd = this.props.slideEnd;
-        return (   
-            <div>         
-            {/*<div className='replay' onClick={() => this.replay()}></div>
-            <div className={this.state.isPlay ? 'pause' : 'play'} onClick={() => this.toggle()}></div>*/}
-            { slideEnd ? <div onClick={() => this.replay()}><path d="M7.41 7.84l4.59 4.58 4.59-4.58 1.41 1.41-6 6-6-6z"/>R</div> : <div className={this.state.isPlay ? 'pause' : 'play'} onClick={() => this.toggle()}></div> }
-            </div>
-        )
+        let playPause = (<div className={this.state.isPlay ? 'pause' : 'play'} onClick={() => this.toggle()}></div>);
+        let replay = (<div className="play" onClick={() => this.replay()}></div>)
+        if (slideEnd) {
+            return replay;
+        } else {
+            return playPause;
+        }
     }
 }
 
