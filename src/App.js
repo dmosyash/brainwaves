@@ -11,7 +11,7 @@ class App extends Component {
     super(props)
     this.state = {
       content: contentList[0],
-      controls: null
+      showControls: 'none'
     }
     this.audio = null;
     this.hover = false;
@@ -24,22 +24,12 @@ class App extends Component {
         onend: this.onAudioEnd.bind(this)
     });
     this.audio.play();
-    this.controlsDOM = (
-      <div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas}/>
-      </div>
-    );
-    let that = this;
-    setTimeout(function () {
-      that.setState({controls: null})
-    }, 1000);
   }
 
   onAudioEnd() {
     this.slideEnd = true;
-    this.setState({controls: (<div className="controls">
-        <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas}/>
-    </div>),
+    this.setState({
+      showControls: 'block',
       suggestions: (
         <div className="suggestions">
           { this.listOfContents() }
@@ -52,18 +42,16 @@ class App extends Component {
     if(this.slideEnd) {
       return;
     }
+    clearTimeout(this.controlTimer);
     this.hover = true;
-    this.setState({controls: this.controlsDOM});
-  }
-
-  hoverEnd(){
-    if(this.slideEnd) {
-      return;
-    }
-    setTimeout(function () {
+    this.setState({ showControls: 'block' });
+    this.controlTimer = setTimeout(function () {
+      if (this.slideEnd) {
+        return;
+      }
       this.hover = false;
-      this.setState({controls: null});
-    }.bind(this), 1000);
+      this.setState({ showControls: 'none' });
+    }.bind(this), 3000);
   }
 
   gotoIndex(index) {
@@ -82,7 +70,7 @@ class App extends Component {
     this.slideEnd = false;
     this.audio.play();
     this.setState({
-      controls: null,
+      showControls: 'none',
       suggestions: null
     });
   }
@@ -90,7 +78,7 @@ class App extends Component {
   selectedContent(item) {
     this.setState({
       content: item,
-      controls: null,
+      showControls: 'none',
       suggestions: null
     });
     this.audio.stop();
@@ -118,12 +106,14 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
         </div>
-        <Grid>
+        <Grid style={{ margin: '0px'}}>
           <Row>
-            <Col xs={12} sm={12} md={8} style={{ margin: '0px', padding: '0px' }}>
-              <div className="content-holder" onMouseEnter={() => this.hoverStart()} onMouseLeave={() => this.hoverEnd()} ref={(input) => {this.canvas = input}}>
+            <Col xs={12} sm={12} md={8}>
+              <div className="content-holder" onMouseMove={() => this.hoverStart()} ref={(input) => {this.canvas = input}}>
                 <Content src={this.state.content.image} />
-                { this.state.controls }
+                <div className="controls" style={{ display: this.state.showControls }}>
+                  <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas} audio={this.audio} />
+                </div>
                 { this.state.suggestions }
               </div>
             </Col>

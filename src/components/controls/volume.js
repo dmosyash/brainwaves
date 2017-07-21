@@ -4,29 +4,34 @@ import './controls.css';
 import 'react-rangeslider/lib/index.css'
 
 class VolumeSlider extends Component {
-    constructor(props) {
+  constructor(props) {
     super(props)
     this.state = {
-      volume: 5
+      volume: 100
     }
+  }
+  
+  componentDidMount () {
+    console.log(this.state.volume);
   }
 
   handleOnChange = (value) => {
     this.setState({
       volume: value
-    })
+    });
+    this.props.audio.volume(value / 100);
   }
 
   render() {
     let { volume } = this.state
     let sliderStyle = {
         position: 'absolute',
-        bottom: '-7px',
+        bottom: '-5px',
         left: '230px',
         width: '50%'
     }
     return (
-        <div style={sliderStyle}>
+      <div style={sliderStyle}>
             <Slider
                 value={volume}
                 onChange={this.handleOnChange}

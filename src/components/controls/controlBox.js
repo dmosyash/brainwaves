@@ -11,7 +11,7 @@ class ControlBox extends Component {
     render() {
         let controlBoxStyle = {
             position: 'relative',
-            // bottom: '10px',
+            bottom: '5px',
             height: '20px',
             backgroundColor: 'black',
             textDecoration: 'none',
@@ -23,7 +23,7 @@ class ControlBox extends Component {
                 <PlayPause playToggle={this.props.playToggle} replay={this.props.replay} slideEnd={this.props.slideEnd} />
                 <NextButton gotoIndex={this.props.gotoIndex} currentIndex={this.props.currentIndex} />
                 <Fullscreen canvas={this.props.canvas} />
-                {/*<VolumeSlider />*/}
+                <VolumeSlider audio={this.props.audio}/>
             </div>
         )
     }
