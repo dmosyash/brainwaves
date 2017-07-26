@@ -23,7 +23,7 @@ class PlayPause extends Component {
     render() {
         let slideEnd = this.props.slideEnd;
         let playPause = (<div className={this.state.isPlay ? 'pause' : 'play'} onClick={() => this.toggle()}></div>);
-        let replay = (<div className="play" onClick={() => this.replay()}></div>)
+        let replay = (< div className="repeat" onClick={() => this.replay()} ><i className="fa fa-repeat fa-2x"></i></div >)
         if (slideEnd) {
             return replay;
         } else {

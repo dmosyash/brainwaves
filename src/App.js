@@ -119,7 +119,7 @@ class App extends Component {
             </Col>
             <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
-              <div style={{ margin: '20px' }}>{ this.listOfContents() }</div>
+              <div style={{ margin: '20px' }}>{this.listOfContents()}</div>
             </Col>
           </Row>
         </Grid>

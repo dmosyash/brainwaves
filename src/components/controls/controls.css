@@ -64,6 +64,12 @@
     right: 8px;
 }
 
+.repeat {
+  position: absolute;
+  bottom: 0px;
+  left: 94px;
+}
+
 #button svg {
 
   width: 35px;
@@ -73,3 +79,17 @@
   display: inline-block;
 
 }
+
+.fa-repeat {
+  color: white;
+}
+
+.responsive-volume {
+  display: block;
+}
+  @media screen and (max-width: 580px) {
+    .show {
+      display: none;
+      width: 0px;
+    }
+  }

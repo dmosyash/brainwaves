@@ -31,7 +31,7 @@ class VolumeSlider extends Component {
         width: '50%'
     }
     return (
-      <div style={sliderStyle}>
+      <div style={sliderStyle} className="responsive-volume">
             <Slider
                 value={volume}
                 onChange={this.handleOnChange}

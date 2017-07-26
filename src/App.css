@@ -24,7 +24,7 @@
 
 .suggestions {
   position: absolute;
-  width: 100%;
+  /* width: 100%; */
   top: 20px;
   left: 10%;
 }
