@@ -7,11 +7,12 @@ class VolumeSlider extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      volume: 100
+      volume: 100,
+      isMute: false
     }
   }
   
-  componentDidMount () {
+  componentDidMount() {
     console.log(this.state.volume);
   }
 
@@ -22,21 +23,35 @@ class VolumeSlider extends Component {
     this.props.audio.volume(value / 100);
   }
 
+  toggleMute() {
+    let isMute = this.state.isMute;
+    this.setState({
+      isMute: !isMute
+    });
+    this.props.audio.mute(!isMute);
+  }
+
   render() {
     let { volume } = this.state
     let sliderStyle = {
         position: 'absolute',
         bottom: '-5px',
-        left: '230px',
+        left: '210px',
         width: '50%'
     }
+    let speakerStyle = {
+      width: '10px',
+      position: 'absolute',
+      left: '10px',
+      bottom: '6px'
+    }
     return (
-      <div style={sliderStyle} className="responsive-volume">
-            <Slider
-                value={volume}
-                onChange={this.handleOnChange}
-            />  
+      <div style={sliderStyle}>
+        <div style={speakerStyle}>
+          {this.state.isMute ? (<i className="fa fa-volume-up fa-2x" onClick={this.toggleMute.bind(this)}></i>) : (<i className="fa fa-volume-off fa-2x" onClick={this.toggleMute.bind(this)}></i>)}
         </div>
+        {this.state.isMute ? null : <div className="responsive-volume"><Slider value={volume} onChange={this.handleOnChange} /></div>}
+      </div>
     )
   }
 }

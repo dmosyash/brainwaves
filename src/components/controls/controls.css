@@ -80,15 +80,19 @@
 
 }
 
-.fa-repeat {
+.fa {
   color: white;
 }
 
 .responsive-volume {
   display: block;
+  width: 90%;
+  position: absolute;
+  left: 50px;
+  bottom: 0px;
 }
   @media screen and (max-width: 580px) {
-    .show {
+    .responsive-volume {
       display: none;
       width: 0px;
     }
