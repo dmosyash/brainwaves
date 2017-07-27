@@ -88,7 +88,6 @@ class App extends Component {
     });
     this.audio.play();
     this.slideEnd = false;
-    this.audio.mute(true);
   }
 
   listOfContents() {
@@ -104,22 +103,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-        </div>
-        <Grid style={{ margin: '0px'}}>
+        <Grid>
           <Row>
-            <Col xs={12} sm={12} md={8}>
-              <div className="content-holder" onMouseMove={() => this.hoverStart()} ref={(input) => {this.canvas = input}}>
+            <Col xs={12} sm={12} md={8}>               
+               <div className="content-holder" onMouseMove={() => this.hoverStart()} ref={(input) => {this.canvas = input}}>
                 <Content src={this.state.content.image} />
                 <div className="controls" style={{ display: this.state.showControls }}>
-                  <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas} audio={this.audio} />
-                </div>
-                { this.state.suggestions }
+                   <ControlBox gotoIndex={this.gotoIndex.bind(this)} currentIndex={this.state.content.order} playToggle={this.playPauseToggle.bind(this)} slideEnd={this.slideEnd} replay={this.replay.bind(this)} canvas={this.canvas} audio={this.audio} /> 
+                </div> 
+                 { this.state.suggestions } 
               </div>
             </Col>
             <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
-              <div style={{ margin: '20px' }}>{this.listOfContents()}</div>
+              <div style={{ margin: '20px' }}>{this.listOfContents()}</div> 
             </Col>
           </Row>
         </Grid>

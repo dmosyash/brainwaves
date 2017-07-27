@@ -33,20 +33,14 @@ class VolumeSlider extends Component {
 
   render() {
     let { volume } = this.state
-    let sliderStyle = {
-        position: 'absolute',
-        bottom: '-5px',
-        left: '210px',
-        width: '50%'
-    }
     let speakerStyle = {
       width: '10px',
       position: 'absolute',
-      left: '10px',
-      bottom: '6px'
+      left: '220px',
+      bottom: '1px'
     }
     return (
-      <div style={sliderStyle}>
+      <div>
         <div style={speakerStyle}>
           {this.state.isMute ? (<i className="fa fa-volume-up fa-2x" onClick={this.toggleMute.bind(this)}></i>) : (<i className="fa fa-volume-off fa-2x" onClick={this.toggleMute.bind(this)}></i>)}
         </div>

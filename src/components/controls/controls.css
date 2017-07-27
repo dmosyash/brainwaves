@@ -86,10 +86,10 @@
 
 .responsive-volume {
   display: block;
-  width: 90%;
+  width: 50%;
   position: absolute;
-  left: 50px;
-  bottom: 0px;
+  left: 250px;
+  bottom: -4px;
 }
   @media screen and (max-width: 580px) {
     .responsive-volume {
