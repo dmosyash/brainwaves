@@ -4,9 +4,17 @@ import BrainwavesList from './containers/brainwavesList.js';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './App.css';
 
-class App extends Component {
 
+
+class App extends Component {
   render() {
+  let myWorker = new Worker('./webworker.js');
+
+  myWorker.postMessage(1);
+  
+  myWorker.onmessage = (e) => {
+    console.log(e.data);
+  }
     return (
       <div className="App">
         <Grid>
