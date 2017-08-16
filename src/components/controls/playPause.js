@@ -10,14 +10,19 @@ class PlayPause extends Component {
     }
     toggle() {
         let is_play = this.state.isPlay;
-        this.props.playToggle(!is_play);
+        if(is_play) {
+            this.props.audio.pause();
+        } else {
+            this.props.audio.play();
+        }
         this.setState({
             isPlay: !is_play
         })
     }
 
     replay() {
-        this.props.replay();
+        // this.props.replay();
+        this.props.audio.play();
     }
 
     render() {

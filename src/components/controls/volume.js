@@ -11,10 +11,6 @@ class VolumeSlider extends Component {
       isMute: false
     }
   }
-  
-  componentDidMount() {
-    console.log(this.state.volume);
-  }
 
   handleOnChange = (value) => {
     this.setState({

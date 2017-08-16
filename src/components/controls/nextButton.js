@@ -9,11 +9,14 @@ class NextButton extends Component {
     }
 
     render() {
+        console.log`the index is ${() => console.log('test')}`;
+
         let nextButtonStyle = {
             position: 'absolute',
             bottom: '0px',
             left: '135px'
         }
+
         return (
             <button className="buttons" style={nextButtonStyle} onClick={() => this.onNext()}>Next &raquo;</button>
         )

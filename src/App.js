@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BrainwaveDetails from './containers/brainwaveDetails.js';
 import BrainwavesList from './containers/brainwavesList.js';
-import { Howl } from 'howler';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import './App.css';
 
