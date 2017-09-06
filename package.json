@@ -2,6 +2,7 @@
   "name": "brainwaves",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://dmosyash.github.io/brainwaves",
   "dependencies": {
     "howler": "^2.0.4",
     "react": "^15.6.1",
@@ -17,6 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build staging",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build staging",
+    "deploy": "gh-pages -d build"
   }
 }

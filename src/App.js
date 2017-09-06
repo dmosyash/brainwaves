@@ -117,7 +117,7 @@ class App extends Component {
             <Col xs={12} sm={12} md={4}>
               <h3>BRAINWAVES</h3>
               <div style={{ margin: '20px' }}>{this.listOfContents()}</div> 
-              {'Envirnment: ' + process.env.CUSTOM_ENV}
+              {'Envirnment: ' + process.env.CUSTOM_ENV + '-----' + process.env.NODE_ENV}
             </Col>
           </Row>
         </Grid>
