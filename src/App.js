@@ -3,7 +3,7 @@ import Content from './components/content';
 import contentList from './components/contentList';
 import ControlBox from './components/controls/controlBox';
 import { Howl } from 'howler';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+// import { Grid, Row, Col } from 'react-flexbox-grid';
 import './App.css';
 
 class App extends Component {
@@ -103,9 +103,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Grid>
+        {/* <Grid>
           <Row>
-            <Col xs={12} sm={12} md={8}>               
+            <Col xs={12} sm={12} md={8}>                */}
                <div className="content-holder" onMouseMove={() => this.hoverStart()} ref={(input) => {this.canvas = input}}>
                 <Content src={this.state.content.image} />
                 <div className="controls" style={{ display: this.state.showControls }}>
@@ -113,14 +113,14 @@ class App extends Component {
                 </div> 
                  { this.state.suggestions } 
               </div>
-            </Col>
-            <Col xs={12} sm={12} md={4}>
+            {/* </Col>
+            <Col xs={12} sm={12} md={4}> */}
               <h3>BRAINWAVES</h3>
               <div style={{ margin: '20px' }}>{this.listOfContents()}</div> 
               {'Envirnment: ' + process.env.CUSTOM_ENV + '-----' + process.env.NODE_ENV}
-            </Col>
+            {/* </Col>
           </Row>
-        </Grid>
+        </Grid> */}
       </div>
     );
   }
