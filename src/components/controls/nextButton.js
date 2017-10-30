@@ -14,6 +14,7 @@ class NextButton extends Component {
             bottom: '0px',
             left: '135px'
         }
+
         return (
             <button className="buttons" style={nextButtonStyle} onClick={() => this.onNext()}>Next &raquo;</button>
         )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Howl } from 'howler';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { goToWave } from './../actions/index.js';
@@ -8,28 +9,23 @@ import './../App.css';
 class BrainwaveDetails extends Component {
     constructor(props) {
         super(props);
+        slideChange = true;
         this.state = {
-            showControls: 'none'
+            slideEnd: false
         }
-        this.controlTimer = null;
-        this.hover = false;
-        this.slideEnd = false; 
     }
 
-    hoverStart() {
-        if (this.slideEnd) {
-            return;
-        }
-        clearTimeout(this.controlTimer);
-        this.hover = true;
-        this.setState({ showControls: 'block' });
-        this.controlTimer = setTimeout(function () {
-            if (this.slideEnd) {
-                return;
+    componentDidUpdate() {
+        if(slideChange) {
+            if(this.state.slideEnd) {
+                this.setState({slideEnd: false});
             }
-            this.hover = false;
-            this.setState({ showControls: 'none' });
-        }.bind(this), 3000);
+        }
+    }
+
+    onAudioEnd() {
+        slideChange = false;
+        this.setState({slideEnd: true});
     }
 
     render() {
@@ -37,18 +33,31 @@ class BrainwaveDetails extends Component {
             return <h3>Please select any Brainwave</h3>;
         }
 
+        if(this.audio) {
+            this.audio.stop();
+        }
+        if(!this.state.slideEnd) {
+            this.audio = new Howl({
+                src: this.props.activeWave.audio,
+                onend: this.onAudioEnd.bind(this)
+            });
+            this.audio.play();
+        }
+
         return (
-            <div onMouseMove={() => this.hoverStart()}>
+            <div ref={input1 => this.container = input1} onMouseMove={() => this.controls.hoverStart()}>
                 <img alt="sdf" src={this.props.activeWave.image} width="100%" />
-                <div className="controls" style={{ display: this.state.showControls }}>
-                    <ControlBox gotoIndex={this.props.goToWave.bind(this)} currentIndex={this.props.activeWave.order} />
+                <div className="controls">
+                    <ControlBox ref={(input) => this.controls = input} gotoIndex={this.props.goToWave.bind(this)} currentIndex={this.props.activeWave.order} audio={this.audio} slideEnd={this.state.slideEnd} canvas={this.container} />
                 </div>
             </div>
         );
     }
 }
 
+let slideChange = false;
 function mapStateToProps(state) {
+    slideChange = true;
     return {
         activeWave: state.selectedWave
     }
