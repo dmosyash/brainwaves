@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { selectWave } from './../actions/index.js';
 
 class BrainwavesList extends Component {
@@ -19,14 +18,4 @@ class BrainwavesList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        brainwaves: state.brainwaves
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ selectWave }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BrainwavesList);
+export default connect(state => ({ brainwaves: state.brainwaves }), { selectWave })(BrainwavesList);
